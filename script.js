@@ -24,7 +24,7 @@ THE SOFTWARE.
   "use strict";
 
   var COLOR_LINE = "rgba(243, 218, 131, 0.5)";
-  var COLOR_FILL = "#006241";
+  var COLOR_FILL = "#dfe0e2";
   var COLOR_JELLY_DOT = "rgb(230, 90, 70)";
   var COLOR_ANCHOR_DOT = "rgba(152, 65, 52, 0.5)";
   var COLOR_MOUSE_FILL = "rgba(141, 46, 86, 0.5)";
@@ -249,10 +249,10 @@ THE SOFTWARE.
   }
 
   function DrawOptions() {
-    this.drawAnchors = new DrawOption(document.getElementById('draw-anchors'));
-    this.drawJellies = new DrawOption(document.getElementById('draw-jellies'));
-    this.drawMouse = new DrawOption(document.getElementById('draw-mouse'));
-    this.drawOutline = new DrawOption(document.getElementById('draw-outline'));
+    this.drawAnchors = 0;
+    this.drawJellies = 0;
+    this.drawMouse = 0;
+    this.drawOutline = 0;
     this.drawCurvy = new DrawOption(document.getElementById('draw-curvy'));
   }
 
@@ -461,7 +461,7 @@ THE SOFTWARE.
     this.island = new JellyIsland(points);
     this.mouse = new Mouse(this.canvas, this.island);
     this.tick = JellyDemo.prototype.tick.bind(this);
-    this.fps = document.getElementById('fps');
+  this.fps = document.getElementById('fps');
     this.fps.onclick = (function() { 
       this.island.wobble(WOBBLE_FACTOR);
       return false; 
@@ -518,6 +518,7 @@ THE SOFTWARE.
     }
 
   };
+  
   
 
   function main() {

@@ -19,13 +19,18 @@ article, aside, dialog, figure, footer, header, hgroup, nav, section {
 }
 
 body {
-  line-height: 1.5;
-  background: white;
+  line-height: 0px;
+  background: #071013;
+  
 }
 
 #screen {
   position: relative;
-  background-color: #1e3932;
+  left: (100%-100px);
+  background-color: #071013;
+  width: 100%;
+  height: 100%;
+
 }
 
 table {
@@ -61,8 +66,8 @@ html { height: 100%; }
 }
 
 body {
-  background-color: #333;
-  color: #ccc;
+  
+  color: #071013;
   padding: 30px;
   font-family: "Helvetica Neue", "Verdana", sans-serif;
 }
@@ -87,16 +92,15 @@ a {
 
 #main {
   text-align: center;
-  padding: 24px;
+  padding: 0px;
 }
 
 .blob {
-  border-radius:8px;
+  border: 0px;
   float: left;
   display: inline;
-  margin: 10px;
-  padding: 15px;
-  background-color: rgba(255,255,255,0.3);
+  
+  background-color: rgba(255,255,255);
   -webkit-transition: all 0.2s ease-in-out;
   -moz-transition: all 0.2s ease-in-out;
   -o-transition: all 0.2s ease-in-out;
@@ -116,7 +120,7 @@ a {
 .option {
   text-align: center;
   cursor: pointer;
-  width: 150px;
+  width: 10px;
   background-color: rgba(0, 0, 0, 0.3);
 }
 
@@ -137,18 +141,17 @@ a {
 }
 
 #sidebar {
-  width: 200px;
+  width: 0px;
 }
 
 a.blob {
   width: 150px;
-  background-color: rgba(52, 93, 115, 0.8);
-  color: rgb(30, 34, 62);
+  background-color: rgba(39, 108, 141, 0.8);
+  color: rgb(39, 108, 141);
   text-align: center;
 }
 
 a.blob:hover {
-  background-color: rgba(54, 141, 148, 0.8);
+  background-color: rgba(39, 108, 141, 0.8);
 }
-
 
