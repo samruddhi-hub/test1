@@ -19,7 +19,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
-(function() {
+(function(window, document, undefined) {
 
   "use strict";
 
@@ -30,8 +30,8 @@ THE SOFTWARE.
   var COLOR_MOUSE_FILL = "rgba(141, 46, 86, 0.5)";
   var COLOR_MOUSE_STROKE = "rgba(170, 60, 82, 0.5)";
 
-  var SCALE = 40;
-  var DOT_RADIUS = 6;
+  var SCALE = 65;
+  var DOT_RADIUS = 10;
   var ANCHOR_STIFFNESS = 0.75;
   var ANCHOR_DAMP = 0.35;
   var MOUSE_FORCE = 6;
@@ -46,27 +46,27 @@ THE SOFTWARE.
   var YOFF = 1.5;
 
   var MAX_ACROSS_NEIGHBOR_DIST = SCALE;
-  
+
   var RANDOM_OFFSET = false;
-  
-  var canvasElement = document.getElementById('screen');
-  var debugMessageBox = document.getElementById( 'js-message');
-  var blob;
-  
-  var canvasLeft = 0;
-  var canvasTop = 0;
-  var canvasRight = canvasElement.getBoundingClientRect().width;
-  var canvasBottom = canvasElement.getBoundingClientRect().height;
 
   var POINTS = [
     [5, 9.995], [8.214, 8.825], [9.924, 5.863], [9.33, 2.495], [6.71, 0.297], [3.29, 0.297], [0.67, 2.495], [0.076, 5.863], [1.786, 8.825] // final point is implicit
-  ].map(function(xy) { 
+  ].map(function(xy) {
     if (RANDOM_OFFSET) {
       xy[0] += Math.random()-0.5;
       xy[1] += Math.random()-0.5;
     }
     return [(xy[0] + XOFF) * SCALE, (xy[1] + YOFF) * SCALE];
   });
+
+
+  var canvasElement;
+  var blob;
+  var canvasLeft;
+  var canvasTop;
+  var canvasRight;
+  var canvasBottom;
+
   
   function Vec2(x, y) { this.x = x; this.y = y; }
   Vec2.prototype.set = function(x, y) { this.x = x; this.y = y; return this; };
@@ -238,29 +238,19 @@ THE SOFTWARE.
       this.points[i].pos.translate(dx, dy);
     }
   }
-  
-  function DrawOption(elem) {
-    this.value = !!elem.checked;
-    var self = this;
-    elem.onclick = function() {
-      self.value = !!this.checked;
-      this.parentNode.setAttribute('data-active', self.value?"1":"0");
-    };
-  }
+
 
   function DrawOptions() {
     this.drawAnchors = 0;
     this.drawJellies = 0;
     this.drawMouse = 0;
     this.drawOutline = 0;
-    this.drawCurvy = new DrawOption(document.getElementById('draw-curvy'));
   }
 
   DrawOptions.prototype.shouldDrawAnchors = function() { return this.drawAnchors.value; };
   DrawOptions.prototype.shouldDrawJellies = function() { return this.drawJellies.value; };
   DrawOptions.prototype.shouldDrawMouse = function() { return this.drawMouse.value; };
   DrawOptions.prototype.shouldDrawOutline = function() { return this.drawOutline.value; };
-  DrawOptions.prototype.shouldDrawCurvy = function() { return this.drawCurvy.value; };
 
   function Screen(view) {
     this.dImg = this.cacheDotImg(COLOR_JELLY_DOT);
@@ -328,7 +318,7 @@ THE SOFTWARE.
     var jellies = island.points;
     var jlen = jellies.length;
     this.ctx.fillStyle = COLOR_FILL;
-    var curvy = this.opts.shouldDrawCurvy();
+    var curvy = true;
     if (curvy) {
       this.outlineCurvePath(jellies);
       this.ctx.fill();
@@ -386,7 +376,6 @@ THE SOFTWARE.
       self.inside = true;
       var r = canvas.getBoundingClientRect();
       self.pos.set(e.clientX - r.left, e.clientY - r.top);
-      debugMessageBox.innerHTML = JSON.stringify(self.pos) + ', self.inside: ' + self.inside + ', self.dragging: ' + self.dragging; // HB DEBUG
 
       // HB dragging
       if (self.dragging){
@@ -440,7 +429,6 @@ THE SOFTWARE.
       self.inside = false;
       self.dragging = false;
       self.pos.set(-999, -999);
-      debugMessageBox.innerHTML = JSON.stringify(self.pos) + ', self.inside: ' + self.inside; // HB DEBUG
     };
   }
 
@@ -522,10 +510,16 @@ THE SOFTWARE.
   
 
   function main() {
+    var canvasElement = document.getElementById('screen');
+    var canvasLeft = 0;
+    var canvasTop = 0;
+    var canvasRight = canvasElement.getBoundingClientRect().width;
+    var canvasBottom = canvasElement.getBoundingClientRect().height;
     blob = new JellyDemo(canvasElement, POINTS);
     blob.start();
   };
 
-  main();
+  // main();
+  window.onload = main;
 
-}());
+})(window, document, undefined);
